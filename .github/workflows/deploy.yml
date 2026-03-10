@@ -24,4 +24,11 @@ jobs:
         run: |
           aws s3 cp index.html s3://moibrahim.io/index.html \
             --content-type "text/html" \
-            --cache-control "no-cache, no-store, must-revalidate"
+            --cache-control "no-cache, no-store, must-revalidate" \
+            --acl public-read
+
+      - name: Invalidate CloudFront cache
+        run: |
+          aws cloudfront create-invalidation \
+            --distribution-id E2XSAE01TLSZLP \
+            --paths "/*"
